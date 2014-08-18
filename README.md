@@ -54,7 +54,7 @@ sudo docker run -d -v ~/bud:/data -p 443:443  joeybaker/bud-tls
 In your bud.json
 ```json
   "backend": [{
-    "port": 8000, // whatever port the other container has a process running on
+    "port": backend_port, // must be set to backend_port so the config script can dynamicall replace with the other container's port
     "host": "backend_ip", // must set to backend_ip so the config script can dynamically replace this with the other container's ip
   }]
 ```
