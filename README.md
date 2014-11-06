@@ -63,3 +63,8 @@ Then, run the docker command with `--link`. `backendContainer` is the name of th
 ```bash
 sudo docker run -d -v ~/bud:/data -p 443:443 --link backendContainer:backend joeybaker/bud-tls
 ```
+
+## Developing
+```bash
+sudo docker build -t joeybaker/bud-tls .
+```
