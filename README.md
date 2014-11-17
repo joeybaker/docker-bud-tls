@@ -43,11 +43,10 @@ Sample `bud.json`.
     "host": "127.0.0.1",
   }]
 }
-`
 ```
 
 ```bash
-sudo docker run -d -v ~/bud:/data -p 443:443  joeybaker/bud-tls
+sudo docker run -d -v ~/bud:/data -p 443:443 --name bud  joeybaker/bud-tls
 ```
 
 ### forward a port for another docker container
@@ -59,9 +58,9 @@ In your bud.json
   }]
 ```
 
-Then, run the docker command with `--link`. `backendContainer` is the name of the container you want to expose. You must expose it as `backend`.
+Then, run the docker command with `--link`. `<backendContainer>` is the name of the container you want to expose. You must expose it as `backend`.
 ```bash
-sudo docker run -d -v ~/bud:/data -p 443:443 --link backendContainer:backend joeybaker/bud-tls
+sudo docker run -d -v ~/bud:/data -p 443:443 --link <backendContainer>:backend --name bud joeybaker/bud-tls
 ```
 
 ## Developing
