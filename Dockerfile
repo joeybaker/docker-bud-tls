@@ -1,22 +1,63 @@
 # bud-tls
 #
-# VERSION               1.0.0
+# VERSION               1.0.32.9
 
 FROM      dockerfile/nodejs
 MAINTAINER Joey Baker <joey@byjoeybaker.com>
 
+ENV BUD_VERSION 0.32.9
+
+# Build bud from source
+# the npm install is borked https://github.com/indutny/bud/issues/57
 # make sure the package repository is up to date
-RUN npm i -g bud-tls@0.32.7
+RUN apt-get update -qq \
+  && apt-get install build-essential -y \
+  # pull down bud
+  && mkdir /opt/bud-install \
+  && cd /opt/bud-install \
+  && git clone --branch v$BUD_VERSION --depth 1 https://github.com/indutny/bud \
+  && cd bud \
+  && git submodule update --init --recursive \
+  # build gyp, we need subversion to get it, so install and then remove
+  && apt-get install subversion -y \
+  && svn co http://gyp.googlecode.com/svn/trunk tools/gyp \
+  && apt-get purge subversion -y \
+  # build bud
+  && ./gyp_bud \
+  && make -C out/ \
+  # move bud into place
+  && mkdir -p /opt/bud/ \
+  && cp -rf out/Release/bud /opt/bud/ \
+  # cleanup
+  && cd / \
+  && rm -rf /opt/bud-install \
+  && apt-get purge build-essential -y \
+  && apt-get autoremove -y
 
 # add a user for bud to run workers as
-RUN adduser --system --disabled-password \
-  --home /usr/local/var/lib/couchdb --no-create-home \
-  --shell=/bin/bash --group --gecos "" bud
+RUN adduser --system --shell=/bin/bash --group --gecos "" bud
+
+# install voxer's bud logger https://github.com/indutny/bud-logger
+# b/c the built in logger isn't so great, and @indutny suggested it
+RUN mkdir /opt/bud-logger-install \
+  && cd /opt/bud-logger-install \
+  && apt-get install build-essential -y \
+  && git clone --recursive git://github.com/indutny/bud-logger \
+  && cd bud-logger \
+  && ./gyp_logger \
+  && make -C out/ -j24 \
+  && cp -rf ./out/Release/logger.bud /opt/bud/ \
+  # cleanup
+  && cd / \
+  && rm -rf /opt/bud-logger-install \
+  && apt-get purge build-essential -y \
+  && apt-get autoremove -y 
+  # Add `logger.bud` to the `tracing.dso` section in bud configuration
 
 # for some reason things break if using CMD, so we'll just have a script kick off bud
-ADD ./start.sh /opt/start.sh
-RUN chmod 770 /opt/start.sh
+ADD ./start.sh /opt/bud/start.sh
+RUN chmod 770 /opt/bud/start.sh
 
-ENTRYPOINT ["/opt/start.sh"]
+ENTRYPOINT ["/opt/bud/start.sh"]
 
 EXPOSE 443

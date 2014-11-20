@@ -19,7 +19,7 @@ function start_bud(){
   echo "Setting backend ip to: $backend_ip"
   sed -e "s/backend_ip/$backend_ip/" -i /data/$(hostname)_bud.json
   sed -e "s/backend_port/$backend_port/" -i /data/$(hostname)_bud.json
-  exec bud -c /data/$(hostname)_bud.json
+  exec /opt/bud/bud -c /data/$(hostname)_bud.json
   # cleanup after ourselves since bud needs a file
   rm -f /data/$(hostname)_bud.json
 }
