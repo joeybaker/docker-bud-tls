@@ -1,11 +1,9 @@
 # bud-tls
-#
-# VERSION               1.0.32.9
 
 FROM      dockerfile/nodejs
 MAINTAINER Joey Baker <joey@byjoeybaker.com>
 
-ENV BUD_VERSION 0.32.9
+ENV BUD_VERSION 0.32.10
 
 # Build bud from source
 # the npm install is borked https://github.com/indutny/bud/issues/57
