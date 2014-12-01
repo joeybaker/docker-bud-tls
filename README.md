@@ -67,3 +67,5 @@ sudo docker run -d -v ~/bud:/data -p 443:443 --link <backendContainer>:backend -
 ```bash
 sudo docker build -t joeybaker/bud-tls .
 ```
+
+Pushes to master on this repo will update the [official docker registry image](https://registry.hub.docker.com/u/joeybaker/bud-tls/).
