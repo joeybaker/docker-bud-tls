@@ -8,33 +8,33 @@ function start_bud(){
   local backend_ip
   local backend_port
 
-  # if there's no linked container, just use the IP of the host
+  # if docker has not defined a backend port just go, else put it in the config
   if [ -z ${BACKEND_PORT+x} ]; then
     backend_ip=$(netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}')
-  # else, get the IP of the linked container
   else
     # Docker sets this var based on linking as "backend"
     #                               remove the  tcp://
     backend="$(echo $BACKEND_PORT | cut -c 7-)"
-    #                             get just the ip
+    #                             get just th ip
     backend_ip="$(echo $backend | cut -d ':' -f1)"
     backend_port="$(echo $backend | cut -d ':' -f2-)"
   fi
 
-  # copy the config so we don't overrite the orig
-  cp -f /data/bud.json $(hostname)_bud.json
-  # replace any refrence to backend_ip so we can link containers
-  # or just get to the host container
   echo "Setting backend ip to: $backend_ip"
-  sed -e "s/backend_ip/$backend_ip/" -i /data/$(hostname)_bud.json
+  local bud_json=$(
+    cat /data/bud.json
+    # set the write backend ip
+    | sed "s/backend_ip/$backend_ip/"
+  )
+
+  # if we need to set the backend port, do that
   if [ -z ${backend_port+x} ]; then
     # unset, do nothing
-    echo 'no backend port to set'
+    echo "no backend port to set"
   else
-    sed -e "s/backend_port/$backend_port/" -i /data/$(hostname)_bud.json
+    bud_json=$(echo $bud_json | sed "s/backend_port/$backend_port/")
   fi
 
-  # start bud
-  exec /opt/bud/bud -c /data/$(hostname)_bud.json
+  echo $bud_json | /opt/bud/bud -p
 }
 start_bud
