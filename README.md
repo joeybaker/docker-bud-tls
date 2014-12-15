@@ -40,13 +40,13 @@ Sample `bud.json`.
   "balance": "roundrobin",
   "backend": [{
     "port": 8000,
-    "host": "127.0.0.1",
+    "host": "backend_op", // you must set to this string to connect to the docker host
   }]
 }
 ```
 
 ```bash
-sudo docker run -d -v ~/bud:/data -p 443:443 --name bud  joeybaker/bud-tls
+sudo docker run -d -v ~/bud:/data -p 443:443 --name bud joeybaker/bud-tls
 ```
 
 ### forward a port for another docker container
