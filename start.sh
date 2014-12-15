@@ -22,9 +22,9 @@ function start_bud(){
 
   echo "Setting backend ip to: $backend_ip"
   local bud_json=$(
-    cat /data/bud.json
+    cat /data/bud.json |
     # set the write backend ip
-    | sed "s/backend_ip/$backend_ip/"
+    sed "s/backend_ip/$backend_ip/"
   )
 
   # if we need to set the backend port, do that
