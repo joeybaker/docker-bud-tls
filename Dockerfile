@@ -3,7 +3,7 @@
 FROM      dockerfile/nodejs
 MAINTAINER Joey Baker <joey@byjoeybaker.com>
 
-ENV BUD_VERSION 0.33.0
+ENV BUD_VERSION 0.34.0
 
 # Build bud from source
 # the npm install is borked https://github.com/indutny/bud/issues/57
