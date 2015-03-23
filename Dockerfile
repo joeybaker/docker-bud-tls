@@ -18,9 +18,7 @@ RUN apt-get update -qq \
   && git checkout v$BUD_VERSION \
   && git submodule update --init --recursive \
   # build gyp, we need subversion to get it, so install and then remove
-  && apt-get install subversion -y \
-  && svn co http://gyp.googlecode.com/svn/trunk tools/gyp \
-  && apt-get purge subversion -y \
+  && git clone https://chromium.googlesource.com/external/gyp.git tools/gyp \
   # build bud
   && ./gyp_bud \
   && make -C out/ \
