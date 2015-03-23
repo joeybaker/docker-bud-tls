@@ -13,8 +13,9 @@ RUN apt-get update -qq \
   # pull down bud
   && mkdir /opt/bud-install \
   && cd /opt/bud-install \
-  && git clone --branch v$BUD_VERSION --depth 1 https://github.com/indutny/bud \
+  && git clone --depth 1 https://github.com/indutny/bud \
   && cd bud \
+  && git checkout v$BUD_VERSION \
   && git submodule update --init --recursive \
   # build gyp, we need subversion to get it, so install and then remove
   && apt-get install subversion -y \
