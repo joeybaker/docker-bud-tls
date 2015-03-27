@@ -1,6 +1,6 @@
 # bud-tls
 
-FROM      dockerfile/nodejs
+FROM      node:0.10
 MAINTAINER Joey Baker <joey@byjoeybaker.com>
 
 ENV BUD_VERSION 0.34.2
