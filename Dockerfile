@@ -9,7 +9,7 @@ ENV BUD_VERSION 0.34.4
 # the npm install is borked https://github.com/indutny/bud/issues/57
 # make sure the package repository is up to date
 RUN apt-get update -qq \
-  && apt-get install build-essential -y \
+  && apt-get install build-essential net-tools -y \
   # pull down bud
   && mkdir /opt/bud-install \
   && cd /opt/bud-install \
@@ -30,8 +30,6 @@ RUN apt-get update -qq \
   && rm -rf /opt/bud-install \
   && apt-get purge build-essential -y \
   && apt-get autoremove -y
-  # ensure netstat is installed for the start.sh script
-  && apt-get install net-tools
 
 # add a user for bud to run workers as
 RUN adduser --system --shell=/bin/bash --group --gecos "" bud
