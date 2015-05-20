@@ -30,6 +30,8 @@ RUN apt-get update -qq \
   && rm -rf /opt/bud-install \
   && apt-get purge build-essential -y \
   && apt-get autoremove -y
+  # ensure netstat is installed for the start.sh script
+  && apt-get install net-tools
 
 # add a user for bud to run workers as
 RUN adduser --system --shell=/bin/bash --group --gecos "" bud
