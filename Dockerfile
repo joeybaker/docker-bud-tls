@@ -1,6 +1,6 @@
 # bud-tls
 
-FROM      node:0.10
+FROM      node:0.12
 MAINTAINER Joey Baker <joey@byjoeybaker.com>
 
 ENV BUD_VERSION 1.0.4
