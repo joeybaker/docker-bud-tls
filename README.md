@@ -1,4 +1,5 @@
-# Docker container for [bud-tls](https://github.com/indutny/bud) [![](http://dockeri.co/image/joeybaker/bud-tls)](https://registry.hub.docker.com/u/joeybaker/bud-tls/)
+# Docker container for [bud-tls](https://github.com/indutny/bud) [![Docker Pulls](https://img.shields.io/docker/pulls/joeybaker/bud-tls.svg)](https://registry.hub.docker.com/u/joeybaker/bud-tls/)
+
 
 Docker container for Bud, a TLS terminator for superheroes.
 
