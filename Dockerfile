@@ -1,9 +1,9 @@
 # bud-tls
 
-FROM      node:0.12
+FROM      node:5
 MAINTAINER Joey Baker <joey@byjoeybaker.com>
 
-ENV BUD_VERSION 1.3.8
+ENV BUD_VERSION 1.3.9
 
 # Build bud from source
 # the npm install is borked https://github.com/indutny/bud/issues/57
