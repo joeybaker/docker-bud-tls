@@ -3,7 +3,7 @@
 FROM      node:6
 MAINTAINER Joey Baker <joey@byjoeybaker.com>
 
-ENV BUD_VERSION 4.0.11
+ENV BUD_VERSION 4.0.21
 
 # Build bud from source
 # the npm install is borked https://github.com/indutny/bud/issues/57
